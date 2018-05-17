@@ -12,7 +12,7 @@ namespace Microsoft.Bot.Sample.SimpleEchoBot
     public class EchoDialog : IDialog<object>
     {
         protected int count = 1;
-        
+        bool FirstTimeChat = false;
 
 
         public async Task StartAsync(IDialogContext context)
@@ -40,18 +40,31 @@ namespace Microsoft.Bot.Sample.SimpleEchoBot
                 {
                     case "สวัสดี":
                         await context.PostAsync("สวัสดีขอรับอ้อเจ้า");
+                        FirstTimeChat = true;
                         break;
                     case "สวัสดีครับ":
                         await context.PostAsync("สวัสดีสุดหล่อ");
+                        FirstTimeChat = true;
                         break;
                     case "สวัสดีค่ะ":
                         await context.PostAsync("สวัสดีน้องสาว");
+                        FirstTimeChat = true;
                         break;
                     case "สวัสดีคะ":
                         await context.PostAsync("คำว่า คะ ใช้ต่อหลังประโยคคำถาม 'เท่าไรคะ' 'อะไรคะ' อย่าใช้สลับกันนะค่ะ");
+                        FirstTimeChat = true;
                         break;
                     default:
-                        await context.PostAsync($"{this.count++}: คุณกำลังพูดว่า: {message.Text}");
+                        if (FirstTimeChat == true)
+                        {
+                            await context.PostAsync($"{this.count++}: คุณกำลังพูดว่า: {message.Text}");
+                            FirstTimeChat = true;
+                        }
+                        else
+                        {
+                            await context.PostAsync("มารยาทแบบไทย ๆ เริ่มด้วยคำว่า สวัสดี ครับ/ค่ะ");
+                            FirstTimeChat = true;
+                        }
                         break;
                 }
                 
