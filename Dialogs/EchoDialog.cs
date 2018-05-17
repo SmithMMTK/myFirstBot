@@ -12,6 +12,8 @@ namespace Microsoft.Bot.Sample.SimpleEchoBot
     public class EchoDialog : IDialog<object>
     {
         protected int count = 1;
+        
+
 
         public async Task StartAsync(IDialogContext context)
         {
@@ -21,6 +23,7 @@ namespace Microsoft.Bot.Sample.SimpleEchoBot
         public async Task MessageReceivedAsync(IDialogContext context, IAwaitable<IMessageActivity> argument)
         {
             var message = await argument;
+            
 
             if (message.Text == "reset")
             {
@@ -33,7 +36,25 @@ namespace Microsoft.Bot.Sample.SimpleEchoBot
             }
             else
             {
-                await context.PostAsync($"{this.count++}: คุณกำลังพูดว่า: {message.Text}");
+                switch (message.Text.ToString())
+                {
+                    case "สวัสดี":
+                        await context.PostAsync("สวัสดีขอรับอ้อเจ้า");
+                        break;
+                    case "สวัสดีครับ":
+                        await context.PostAsync("สวัสดีสุดหล่อ");
+                        break;
+                    case "สวัสดีค่ะ":
+                        await context.PostAsync("สวัสดีน้องสาว");
+                        break;
+                    case "สวัสดีคะ":
+                        await context.PostAsync("คำว่า คะ ใช้ต่อหลังประโยคคำถาม 'เท่าไรคะ' 'อะไรคะ' อย่าใช้สลับกันนะค่ะ");
+                        break;
+                    default:
+                        await context.PostAsync($"{this.count++}: คุณกำลังพูดว่า: {message.Text}");
+                        break;
+                }
+                
                 context.Wait(MessageReceivedAsync);
             }
         }
