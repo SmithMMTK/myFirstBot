@@ -51,7 +51,7 @@ namespace Microsoft.Bot.Sample.SimpleEchoBot
                         FirstTimeChat = true;
                         break;
                     case "สวัสดีคะ":
-                        await context.PostAsync("คำว่า คะ ใช้ต่อหลังประโยคคำถาม 'เท่าไรคะ' 'อะไรคะ' อย่าใช้สลับกันนะค่ะ");
+                        await context.PostAsync("คำว่า คะ ใช้ต่อหลังประโยคคำถาม 'เท่าไรคะ' 'อะไรคะ' อย่าใช้สลับกันนะคะ");
                         FirstTimeChat = true;
                         break;
                     default:
